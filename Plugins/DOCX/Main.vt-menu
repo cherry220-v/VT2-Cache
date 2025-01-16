@@ -1,0 +1,37 @@
+{
+    "mainMenu": [
+        {
+            "id": "tools",
+            "children": [
+                {
+                    "caption": "HTML -> DOCX",
+                    "command": {
+                        "command": "Docx2HtmlCommand"
+                    }
+                },
+                {
+                    "caption": "DOCX -> HTML",
+                    "command": {
+                        "command": "Docx2HtmlCommand"
+                    }
+                }
+            ]
+        }
+    ],
+    "textContextMenu": [
+        {
+            "caption": "-> DOCX",
+            "command": {
+                "command": "Docx2HtmlCommand"
+            }
+        }
+    ],
+    "tabBarContextMenu": [
+        {
+            "caption": "-> DOCX",
+            "command": {
+                "command": "Docx2HtmlCommand"
+            }
+        }
+    ]
+}

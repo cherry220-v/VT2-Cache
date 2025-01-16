@@ -1,0 +1,14 @@
+{
+    "name": "PythonIDE",
+    "version": "1.0",
+    "apiVersion": "1.0",
+    "main": "main.py",
+    "menu": "Main.vt-menu",
+    "repo": "https://github.com/cherry220-v/PythonIDE",
+    "platform": [
+        "Windows",
+        "Linux"
+    ],
+    "requirements": [
+    ]
+}

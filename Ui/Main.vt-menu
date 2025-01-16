@@ -1,0 +1,17 @@
+{
+    "mainMenu": [
+        {
+            "caption": "File",
+            "id": "file",
+            "children": [
+                {
+                    "caption": "New window",
+                    "command": {
+                        "command": "NewWindowCommand"
+                    },
+                    "shortcut": "ctrl+shift+n"
+                }
+            ]
+        }
+    ]
+}
