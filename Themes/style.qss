@@ -12,6 +12,7 @@ Heading {
 QStatusBar {
     background-color: rgb(36, 36, 36);
     border-radius: 2px;
+    border: 0;
     color: white;
     height: 10px;
 }
@@ -364,4 +365,8 @@ QDockWidget {
 QDockWidget::title {
     color: white;
     padding: 5px;
+}
+
+#miniMap {
+    color: white;
 }

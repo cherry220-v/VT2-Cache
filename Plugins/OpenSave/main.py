@@ -13,7 +13,7 @@ def execList(lst):
 def initAPI(api: API):
     global OpenFileCommand, SaveFileCommand, OpenRFileCommand, FileReadThread, FileWriteThread, addToRFiles
     VtAPI = api
-    QtCore = VtAPI.importModule("PyQt6.QtCore")
+    QtCore = VtAPI.importModule("PySide6.QtCore")
     sys = VtAPI.importModule("sys")
 
     class OpenFileCommand(VtAPI.Plugin.WindowCommand):
@@ -21,7 +21,7 @@ def initAPI(api: API):
             super().__init__(api, window)
             self.api: API = api
             self.window: API.Window = window
-            self.QtCore = self.api.importModule("PyQt6.QtCore")
+            self.QtCore = self.api.importModule("PySide6.QtCore")
             self.chardet = self.api.importModule("chardet")
             self.os = self.api.importModule("os")
         def run(self, f: list = [], dlg=False):
@@ -48,7 +48,7 @@ def initAPI(api: API):
                     self.window.signals.fileOpened.emit(view)
 
     class FileReadThread(VtAPI.Widgets.Thread):
-        line_read = QtCore.pyqtSignal(str)
+        line_read = QtCore.Signal(str)
 
         def __init__(self, file_path: str, cclass, buffer_size: int = 1.5*1024*1024):
             super().__init__()
@@ -67,7 +67,7 @@ def initAPI(api: API):
                 chunks = f.read(self.buffer_size)
                 stime = 1
                 for i, chunk in enumerate(chunks):
-                    print(f"{i}/{len(chunks)}")
+                    print(f"{i+1}/{len(chunks)}")
                     self.line_read.emit(chunk)
                     self.msleep(int(50*stime))
                 del chunks, f

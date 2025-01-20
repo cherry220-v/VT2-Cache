@@ -1,13 +1,12 @@
 def initAPI(api):
-    global VtAPI, PythonEditorCommand
+    global VtAPI, PythonEditorCommand, jedi
     VtAPI = api
     sys = VtAPI.importModule("sys")
     os = VtAPI.importModule("os")
-    # sys.path.insert(0, os.path.join(VtAPI.pluginsDir, "PythonSyntax/Lib/site-packages"))
-    sys.path.insert(0, r"C:\Users\Trash\Documents\VarTexter2\Plugins\PythonSyntax\Lib\site-packages")
-    QtGui = VtAPI.importModule("PyQt6.QtGui")
-    QtCore = VtAPI.importModule("PyQt6.QtCore")
-    jedi = VtAPI.importModule("jedi")
+    sys.path.insert(0, VtAPI.Path.joinPath(VtAPI.pluginsDir, r"PythonSyntax/Lib/site-packages"))
+    QtGui = VtAPI.importModule("PySide6.QtGui")
+    QtCore = VtAPI.importModule("PySide6.QtCore")
+    import jedi
 
     def format(color, style=''):
         _color = QtGui.QColor()
@@ -97,11 +96,9 @@ def initAPI(api):
     }
 
     class PythonEditorCommand(VtAPI.Plugin.TextCommand):
-        def __init__(self, api, view):
-            super().__init__(api, view)
-            global jedi
-            jedi = self.api.importModule("jedi")
-        def run(self):
+        def run(self, view=None):
+            if view:
+                self.view = view
             if self.view.getFile() and self.view.getFile().endswith(".py"):
                 self.view.setHighlighter(highlighting_rules)
                 self.view.rehighlite()
@@ -117,4 +114,4 @@ def initAPI(api):
                 return
 
     VtAPI.activeWindow.registerCommandClass({"command": PythonEditorCommand})
-    VtAPI.activeWindow.signals.fileOpened.connect(lambda: VtAPI.activeWindow.runCommand({"command": "PythonEditorCommand"}))
+    VtAPI.activeWindow.signals.fileOpened.connect(slot=lambda view: VtAPI.activeWindow.runCommand({"command": "PythonEditorCommand", "kwargs": {"view": view}}), priority=10)
