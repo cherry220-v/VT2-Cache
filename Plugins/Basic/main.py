@@ -3,7 +3,7 @@ This is standart Basic plugin with VT2 functions. You can edit/rewrite functions
 
 """
 
-from api2 import VtAPI
+from api.api2 import VtAPI
 
 def initAPI(api: VtAPI):
     global vtApi, os, shutil, zipfile, uuid, json, req, re, err, QtWidgets, QtCore, QtGui, msgpack
@@ -603,11 +603,11 @@ def restoreWState():
                     vtApi.activeWindow.activeView.setFile(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.file", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
                     vtApi.activeWindow.activeView.setText(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.text", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
                     vtApi.activeWindow.activeView.setCanSave(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.canSave", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
-                    vtApi.activeWindow.activeView.setSaved(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.isSaved", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
                     vtApi.activeWindow.setTitle(vtApi.Path(vtApi.activeWindow.activeView.getFile() or 'Untitled').normalize())
                     vtApi.activeWindow.activeView.setTextSelection(vtApi.Region(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.selection", vtApi.STATEFILE.get(vtApi.activeWindow.id))[0], vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.selection", vtApi.STATEFILE.get(vtApi.activeWindow.id))[1]))
                     vtApi.activeWindow.activeView.setMmapHidden(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.mmapHidden", vtApi.STATEFILE.get(vtApi.activeWindow.id)) or 0)
-                    if vtApi.activeWindow.activeView.getFile(): vtApi.activeWindow.signals.fileOpened.emit(lambda: vtApi.activeWindow.activeView)
+                    if vtApi.activeWindow.activeView.getFile(): vtApi.activeWindow.signals.fileOpened.emit(vtApi.activeWindow.activeView)
+                    vtApi.activeWindow.activeView.setSaved(vtApi.findKey(f"state.tabWidget.tabs.{str(idx)}.isSaved", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
                 if vtApi.findKey("settings.themeFile", vtApi.STATEFILE.get(vtApi.activeWindow.id)): vtApi.activeWindow.setTheme(vtApi.findKey("settings.themeFile", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
                 if vtApi.findKey("settings.locale", vtApi.STATEFILE.get(vtApi.activeWindow.id)): vtApi.activeWindow.setLocale(vtApi.findKey("settings.locale", vtApi.STATEFILE.get(vtApi.activeWindow.id)))
                 vtApi.activeWindow.setTreeWidgetDir(vtApi.findKey("state.treeWidget.openedDir", vtApi.STATEFILE.get(vtApi.activeWindow.id)) or "/")
